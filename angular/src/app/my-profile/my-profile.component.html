@@ -1,7 +1,7 @@
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#fff" type="square-jelly-box"></ngx-spinner>
 
 
-<div class="container">
+<div class="container" *ngIf="user$ | async as user">
 
   <div class="welcome-message" *ngIf="!isProfileFilled">
     <span>
@@ -25,9 +25,9 @@
 
         <div class="personal-info">
           <div class="picture">
-            <img [src]="user.pictureUrl" alt="">
+            <img [src]="pictureUrl || pictureUrl" alt="">
             <div class="overlayUpload">
-              <button mat-raised-button (click)="openUrlDialog()">Pick one</button>
+              <button mat-raised-button (click)="openUrlDialog()">Vælg billede</button>
             </div>
           </div>
 
@@ -57,7 +57,7 @@
               </mat-form-field>
 
               <mat-form-field class="block-field">
-                <mat-select formControlName="gender" placeholder="Køn">
+                <mat-select formControlName="gender" placeholder="Køn" (selectionChange)="updatePicture($event.value)">
                   <mat-option value="Mand">Mand</mat-option>
                   <mat-option value="Kvinde">Kvinde</mat-option>
                 </mat-select>
@@ -105,11 +105,14 @@
 
               </mat-form-field>
             </div>
+            
+            <button [disabled]="isUpdating" (click)="updatePersonData(personDataForm.value); onUpdateClick()"
+            mat-raised-button color="primary">Opdater</button>
+            
           </div>
         </div>
 
-          <button [disabled]="isUpdating" (click)="updatePersonData(personDataForm.value); onUpdateClick()"
-          mat-raised-button color="primary">Opdater</button>
+
 
 
       <h4>Indstillinger</h4>
@@ -145,7 +148,7 @@
         <label *ngIf="usernameValidation"> <strong style="color:red">Advarsel:</strong> denne handling er
           permanent. Al credit, fremgang vil blive slettet og kan ikke gøres om</label>
 
-        <mat-form-field>
+        <mat-form-field class="deleteUserField">
           <input (keyup)="usernameInput($event.target.value)"
             matTooltip="Bemærk at du skal tage højde for store og små bogstaver" matInput
             placeholder="Indtast brugernavn">

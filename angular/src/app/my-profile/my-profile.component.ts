@@ -24,6 +24,7 @@ export class MyProfileComponent implements OnInit {
 
   user: User = new User({});
   subscription: Subscription;
+  pictureUrl: string = '';
 
   isProfileFilled: boolean = false;
 
@@ -122,136 +123,136 @@ export class MyProfileComponent implements OnInit {
   getDisplayData() {
     this.user$ = this.ufbs.getUserByID(this.authService.afAuth.auth.currentUser.uid)
     let observer = this.user$.subscribe(value => {
-      this.user = new User(value);
-      if (this.user.firstName) {
-        this.personDataForm.get('firstName').setValue(this.user.firstName);
-      }
-      if (this.user.lastName) {
-        this.personDataForm.get('lastName').setValue(this.user.lastName);
-      }
-      if (this.user.gender) {
-        this.personDataForm.get('gender').setValue(this.user.gender);
-      }
-      if (this.user.birthday) {
-        this.personDataForm.get('birthday').setValue(this.user.birthday);
-      }
-      if (this.user.phone) {
-        this.personDataForm.get('phone').setValue(this.user.phone);
-      }
-      if (this.user.address) {
-        if (this.user.address.city) {
-          this.personDataForm.get('city').setValue(this.user.address.city);
+      if(value) {
+        this.user = new User(value);
+        this.updatePicture(this.user.gender)
+        this.isActivated = value.isActivated;
+        if (this.user.firstName) {
+          this.personDataForm.get('firstName').setValue(this.user.firstName);
         }
-        if (this.user.address.zip) {
-          this.personDataForm.get('zip').setValue(this.user.address.zip);
+        if (this.user.lastName) {
+          this.personDataForm.get('lastName').setValue(this.user.lastName);
         }
-        if (this.user.address.street) {
-          this.personDataForm.get('street').setValue(this.user.address.street);
+        if (this.user.gender) {
+          this.personDataForm.get('gender').setValue(this.user.gender);
         }
-      }
-      if (this.user.numberOfChildren) {
-        this.personDataForm.get('numberOfChildren').setValue(this.user.numberOfChildren);
-      }
-      if (this.user.username) {
-        this.personDataForm.get('username').setValue(this.user.username);
-      }
-
-      let childCount = 0;
-      if (this.user.children.childOne) {
-        this.personDataForm.get('birthdayChild1').setValue(this.user.children.childOne);
-        childCount++;
-      }
-      if (this.user.children.childTwo) {
-        this.personDataForm.get('birthdayChild2').setValue(this.user.children.childTwo);
-        childCount++;
-      }
-      if (this.user.children.childThree) {
-        this.personDataForm.get('birthdayChild3').setValue(this.user.children.childThree);
-        childCount++;
-      }
-
-      this.displayBirthdayInput(childCount);
-
-      if (this.user.notifications) {
-        this.personDataForm.get('notifications').setValue(this.user.notifications);
-        this.selected = this.user.notifications;
-      }
-
-      if (this.user.subscribed_until) {
-        this.paidUntil = new Date(this.user.subscribed_until);
-      } else {
-        this.paidUntil = "Ikke betalt";
-      }
-
-      let observerTwo = this.rs.getRatings().subscribe(snapshots => {
-        let userScore = 0;
-        let count = 0;
-        snapshots.forEach((snapshot: any) => {
-          if (snapshot.payload.val().fk_host === this.authService.afAuth.auth.currentUser.uid) {
-            userScore += Number(snapshot.payload.val().score);
-            count++;
+        if (this.user.birthday) {
+          this.personDataForm.get('birthday').setValue(this.user.birthday);
+        }
+        if (this.user.phone) {
+          this.personDataForm.get('phone').setValue(this.user.phone);
+        }
+        if (this.user.address) {
+          if (this.user.address.city) {
+            this.personDataForm.get('city').setValue(this.user.address.city);
           }
-        });
-        this.userRating = userScore / count;
-        observerTwo.unsubscribe();
-      });
+          if (this.user.address.zip) {
+            this.personDataForm.get('zip').setValue(this.user.address.zip);
+          }
+          if (this.user.address.street) {
+            this.personDataForm.get('street').setValue(this.user.address.street);
+          }
+        }
+        if (this.user.numberOfChildren) {
+          this.personDataForm.get('numberOfChildren').setValue(this.user.numberOfChildren);
+        }
+        if (this.user.username) {
+          this.personDataForm.get('username').setValue(this.user.username);
+        }
+        
+        let childCount = 0;
+        if (this.user.children.childOne) {
+          this.personDataForm.get('birthdayChild1').setValue(this.user.children.childOne);
+          childCount++;
+        }
+        if (this.user.children.childTwo) {
+          this.personDataForm.get('birthdayChild2').setValue(this.user.children.childTwo);
+          childCount++;
+        }
+        if (this.user.children.childThree) {
+          this.personDataForm.get('birthdayChild3').setValue(this.user.children.childThree);
+          childCount++;
+        }
+        
+        this.displayBirthdayInput(childCount);
+        
+        if (this.user.notifications) {
+          this.personDataForm.get('notifications').setValue(this.user.notifications);
+          this.selected = this.user.notifications;
+        }
 
-      if (this.user.numberOfEventsAttended) {
-        this.eventsAttended = this.user.numberOfEventsAttended;
-      }
-
-      let observerThree = this.efbs.getEventsByHost(this.authService.afAuth.auth.currentUser.uid).subscribe(snapshots => {
-        this.eventsHosted = snapshots.length;
-        if (this.eventsHosted >= 300) {
-          this.metal = "/assets/images/shield_platinum.ico";
-          this.metalName = "Platin";
-        } else if (this.eventsHosted >= 100) {
-          this.metal = "/assets/images/shield_gold.ico";
-          this.metalName = "Guld";
-        } else if (this.eventsHosted >= 30) {
-          this.metal = "/assets/images/shield_silver.ico";
-          this.metalName = "Sølv";
+        if (this.user.subscribed_until) {
+          this.paidUntil = new Date(this.user.subscribed_until);
         } else {
-          this.metal = "/assets/images/shield_bronze.ico";
-          this.metalName = "Bronze";
+          this.paidUntil = "Ikke betalt";
         }
-        observerThree.unsubscribe();
-      });
-
-      this.efbs.getList().subscribe(eventSnapshots => {
-        eventSnapshots.forEach((eventSnapshot: any) => {
-          if (eventSnapshot.participants !== undefined) {
-            Object.values(eventSnapshot.participants).forEach((value: any) => {
-              if (value.username === this.user.username) {
-                this.eventsAttended++;
-              }
-            });
-          }
+        
+        let observerTwo = this.rs.getRatings().subscribe(snapshots => {
+          let userScore = 0;
+          let count = 0;
+          snapshots.forEach((snapshot: any) => {
+            if (snapshot.payload.val().fk_host === this.authService.afAuth.auth.currentUser.uid) {
+              userScore += Number(snapshot.payload.val().score);
+              count++;
+            }
+          });
+          this.userRating = userScore / count;
+          observerTwo.unsubscribe();
         });
-      });
-
-      this.accountProgress(this.user);
-
-      //Child birthday min
-      this.childMin = this.user.birthday;
-      this.spinner.hide();
-      observer.unsubscribe();
+        
+        if (this.user.numberOfEventsAttended) {
+          this.eventsAttended = this.user.numberOfEventsAttended;
+        }
+        
+        let observerThree = this.efbs.getEventsByHost(this.authService.afAuth.auth.currentUser.uid).subscribe(snapshots => {
+          this.eventsHosted = snapshots.length;
+          if (this.eventsHosted >= 300) {
+            this.metal = "/assets/images/shield_platinum.ico";
+            this.metalName = "Platin";
+          } else if (this.eventsHosted >= 100) {
+            this.metal = "/assets/images/shield_gold.ico";
+            this.metalName = "Guld";
+          } else if (this.eventsHosted >= 30) {
+            this.metal = "/assets/images/shield_silver.ico";
+            this.metalName = "Sølv";
+          } else {
+            this.metal = "/assets/images/shield_bronze.ico";
+            this.metalName = "Bronze";
+          }
+          observerThree.unsubscribe();
+        });
+        
+        this.efbs.getList().subscribe(eventSnapshots => {
+          eventSnapshots.forEach((eventSnapshot: any) => {
+            if (eventSnapshot.participants !== undefined) {
+              Object.values(eventSnapshot.participants).forEach((value: any) => {
+                if (value.username === this.user.username) {
+                  this.eventsAttended++;
+                }
+              });
+            }
+          });
+        });
+        
+        this.accountProgress(this.user);
+        
+        //Child birthday min
+        this.childMin = this.user.birthday;
+        this.spinner.hide();
+        observer.unsubscribe();
+      } else {
+        this.authService.doSignout();
+      }
     });
-
-    //Deactivation
-    this.ufbs.getUserByID(this.authService.afAuth.auth.currentUser.uid).subscribe((userSnapshot: any) => {
-      this.isActivated = userSnapshot.isActivated;
-    });
-
+      
   }
-
+    
   updateProfile(formData) {
     this.ufbs.updateUser(formData, this.authService.afAuth.auth.currentUser.uid);
   }
 
   updateContact(formData) {
-    let mergedObj = { phone: formData.phone, address: { street: formData.street, city: formData.city, zip: formData.zip } };
-    this.updateProfile(mergedObj);
+    return { phone: formData.phone, address: { street: formData.street, city: formData.city, zip: formData.zip } };
   }
 
   updateChildren(formData) {
@@ -260,15 +261,15 @@ export class MyProfileComponent implements OnInit {
     if (formData.numberOfChildren > 0) {
       appendObj = {
         children: {
-          childOne: formData.birthdayChild1, childTwo: formData.birthdayChild2,
+          childOne: formData.birthdayChild1,
+          childTwo: formData.birthdayChild2,
           childThree: formData.birthdayChild3
         }
       };
     } else {
       appendObj = { children: 'ingen' };
     }
-    let mergedObj = Object.assign(updatesObj, appendObj);
-    this.updateProfile(mergedObj);
+    return Object.assign(updatesObj, appendObj);
   }
 
   updateSettings(formData) {
@@ -277,7 +278,19 @@ export class MyProfileComponent implements OnInit {
   }
 
   updatePersonData(formData) {
-    this.updateProfile({formData, pictureUrl: this.user.pictureUrl});
+    let address = this.updateContact(formData);
+    let children = this.updateChildren(formData);
+    this.updateProfile(      {
+      username: formData.username, 
+      firstName: formData.firstName, 
+      lastName: formData.lastName, 
+      gender: formData.gender, 
+      birthday: formData.birthday, 
+      notifications: formData.notifications, 
+      ...address,
+      ...children,
+      pictureUrl: this.pictureUrl
+    });
   }
 
   updateUser(formData) {
@@ -368,13 +381,14 @@ export class MyProfileComponent implements OnInit {
   }
 
   deleteAccount() {
-    window.confirm('Er du sikker? (Sidste advarsel)');
-    this.authService.isDeletingUser = true;
-    this.ufbs.deleteUser(this.authService.afAuth.auth.currentUser.uid).then(() => {
-      this.authService.afAuth.auth.currentUser.delete().then(() => {
-        this.authService.doSignout();
+    if (window.confirm('Er du sikker? (Sidste advarsel)')) {
+      this.authService.isDeletingUser = true;
+      this.ufbs.deleteUser(this.authService.afAuth.auth.currentUser.uid).then(() => {
+        this.authService.afAuth.auth.currentUser.delete().then(() => {
+          this.authService.doSignout();
+        });
       });
-    });
+    }
   }
 
   displayBirthdayInput(eventTargetValue) {
@@ -412,9 +426,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   usernameInput(input) {
-    if (input === this.user.username) {
-      this.usernameValidation = true;
-    }
+    this.usernameValidation = input === this.user.username;
   }
 
   lookUpCity(eventTargetValue) {
@@ -439,9 +451,17 @@ export class MyProfileComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result !== undefined)  {
-          this.user.pictureUrl = result;
+          this.pictureUrl = result;
         }
       });
+  }
+
+  updatePicture(gender) {
+    if (this.user.pictureUrl) {
+      this.pictureUrl = this.user.pictureUrl;
+    } else {
+      this.pictureUrl = (gender == "Mand") ? 'assets/images/male.jpg' : 'assets/images/female.jpg';
+    }
   }
 
   fieldsMissing() {
