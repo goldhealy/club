@@ -326,7 +326,7 @@ export class ViewEventComponent implements OnInit {
 
   editEvent() {
     this.dialog.open(CreateNewEventComponent, {
-      width: screen.width / 1.25 + "px",
+      width: screen.width / 1 + "px",
       data: {event: this.selectedEvent, stepIndex: 0, eventKey: this.key}
     });
   }

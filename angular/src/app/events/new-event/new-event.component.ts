@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import {  MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeoCodingApiService } from 'src/app/geo-coding-api.service';
 import { EventFirebaseService } from 'src/app/event-firebase.service';
@@ -40,6 +40,7 @@ export class NewEventComponent implements OnInit {
   eventDate = new Date();
   minDate = new Date();
   maxDate = new Date();
+  username;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -51,9 +52,12 @@ export class NewEventComponent implements OnInit {
     public dialogRef: MatDialogRef<NewEventComponent>,
     public dialog: MatDialog,
     private translateService: TranslateService,
-    private router: Router, 
+    private router: Router,
   ) {
     this.user$ = this.userService.getUserByID(this.authService.afAuth.auth.currentUser.uid);
+    this.user$.subscribe(userSnapshot => {
+      this.username = userSnapshot.username;
+    });
 
     this.translateService.get("COMPONENTS.NEW_EVENT.WHAT_AND_WHERE_STEP.CATEGORIES").subscribe(values => {
       this.categories = nameValueDictionaryFromObject(values);
@@ -91,17 +95,14 @@ export class NewEventComponent implements OnInit {
 
     if (this.newEventFormGroup.valid) {
 
-      this.user$.subscribe((userSnapshot: any) => {
-        const e = this.formDataToModel(userSnapshot);
-        this.eventService.insertEvent(e).then((thenableRef: any) => {
-          let key = thenableRef.path.pieces_[1];
-          this.wallService.insertWall({ fk_event: key, posts: {} });
-          this.onEventCreated.emit(key);
-        });
-        // this.userService.updateUser({numberOfEventsHosted: userSnapshot.numberOfEventsHosted + 1}, this.authService.afAuth.auth.currentUser.uid).then( () => {
-        //   observer.unsubscribe();
-        //   });
+      this.eventService.insertEvent(this.formDataToModel()).then((thenableRef: any) => {
+        let key = thenableRef.path.pieces_[1];
+        this.wallService.insertWall({ fk_event: key, posts: {} });
+        this.onEventCreated.emit(key);
       });
+      // this.userService.updateUser({numberOfEventsHosted: userSnapshot.numberOfEventsHosted + 1}, this.authService.afAuth.auth.currentUser.uid).then( () => {
+      //   observer.unsubscribe();
+      //   });
     } else {
 
       // validate all form fields
@@ -119,7 +120,7 @@ export class NewEventComponent implements OnInit {
     //   });
   }
 
-  formDataToModel(userSnapshot?): Event {
+  formDataToModel(): Event {
 
     const event = new Event({});
 
@@ -133,7 +134,7 @@ export class NewEventComponent implements OnInit {
     event.timeEnd = this.newEventFormGroup.value.eventEndTime;
     event.geoCoord = this.geoCoord;
 
-    if (userSnapshot) event.participants = [{ username: userSnapshot.username }];
+    event.participants = [{ username: this.username }];
 
     event.host = this.authService.afAuth.auth.currentUser.uid;
 
@@ -156,11 +157,11 @@ export class NewEventComponent implements OnInit {
   lookUpZipFromInput(event) {
     this.lookUpZip(event.target.value);
   }
-  
+
   lookUpZip(zip) {
     if ((zip as string).length > 3) {
       this.geoAPI.getZipFromCity(zip).map(response => response.json()).subscribe(result => {
-      this.geoCoord = {
+        this.geoCoord = {
           latitude: result.visueltcenter[1],
           longitude: result.visueltcenter[0]
         };
@@ -172,13 +173,13 @@ export class NewEventComponent implements OnInit {
   fillDetails(): void {
     this.dialogRef.close();
     const dialogRef = this.dialog.open(CreateNewEventComponent, {
-      width: screen.width / 1.25 + "px",
-      data: {event: this.formDataToModel(), stepIndex: 0}
+      width: screen.width / 1 + "px",
+      data: { event: this.formDataToModel(), stepIndex: 0 }
       // disableClose: true
     });
 
     dialogRef.componentInstance.onEventCreated.subscribe(resultsKey => {
-      this.router.navigate(['/view-event'], {queryParams: {"key": resultsKey}})
+      this.router.navigate(['/view-event'], { queryParams: { "key": resultsKey } })
     });
   }
 
