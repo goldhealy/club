@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ViewEventComponent, DialogData } from '../view-event/view-event.component';
+import { ViewEventComponent, DialogData } from '../events/view-event/view-event.component';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WallService } from '../wall.service';
 import { AuthService } from '../auth.service';

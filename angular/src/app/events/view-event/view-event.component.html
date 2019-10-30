@@ -5,6 +5,7 @@
       <div class="col">
         <mat-card *ngIf="selectedEvent.name !== undefined">
           <button *ngIf="isHost" (click)="editEvent()" mat-raised-button color="primary">Rediger</button>
+          <button *ngIf="isHost && !selectedEvent.published" (click)="publishEvent()" mat-raised-button color="primary">Opret event</button>
           <mat-card-title>{{selectedEvent.name}}
             <mat-chip-list>
               <mat-chip color="primary" selected>

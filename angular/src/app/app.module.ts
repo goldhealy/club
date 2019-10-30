@@ -25,7 +25,6 @@ import { LandingPageHeaderComponent } from './landing-page-header/landing-page-h
 import { CreateAccountFormComponent } from './create-account-form/create-account-form.component';
 import { MyEventComponent } from './my-event/my-event.component';
 import { PatchNotesComponent } from './patch-notes/patch-notes.component';
-import { ViewEventComponent } from './view-event/view-event.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { RateEventComponent } from './rate-event/rate-event.component';
 import { MyEventsComponent } from './my-events/my-events.component';
@@ -202,7 +201,6 @@ export class AppDateAdapter extends NativeDateAdapter {
     PricesComponent,
     MyEventComponent,
     PatchNotesComponent,
-    ViewEventComponent,
     ConfirmationDialogComponent,
     RateEventComponent,
     CreateWallPostComponent,

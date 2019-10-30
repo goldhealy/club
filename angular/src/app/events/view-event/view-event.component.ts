@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, NavigationExtras, Router, } from "@angular/router";
-import { Event } from '../entity/event/event.model';
-import { EventFirebaseService } from '../event-firebase.service';
-import { UserFirebaseService } from '../user-firebase.service';
+import { Event } from '../../entity/event/event.model';
+import { EventFirebaseService } from '../../event-firebase.service';
+import { UserFirebaseService } from '../../user-firebase.service';
 import { MatDialog } from '@angular/material';
-import { MobileDetectorService } from '../mobile-detector.service';
-import { AuthService } from '../auth.service';
-import { User } from '../entity/user/user';
-import { WallService } from '../wall.service';
-import { Wall } from '../entity/wall/wall.model';
-import { WallPost } from '../entity/wall/wall-post.model';
-import { CreateWallPostComponent } from '../create-wall-post/create-wall-post.component';
+import { MobileDetectorService } from '../../mobile-detector.service';
+import { AuthService } from '../../auth.service';
+import { User } from '../../entity/user/user';
+import { WallService } from '../../wall.service';
+import { Wall } from '../../entity/wall/wall.model';
+import { WallPost } from '../../entity/wall/wall-post.model';
+import { CreateWallPostComponent } from '../../create-wall-post/create-wall-post.component';
 import { ToastrService } from 'ngx-toastr';
-import { CreateNewEventComponent } from '../create-new-event/create-new-event.component';
-import { RatingService } from '../rating.service';
+import { CreateNewEventComponent } from '../../create-new-event/create-new-event.component';
+import { RatingService } from '../../rating.service';
+import { EditEventPopupComponent } from '../edit-event-popup/edit-event-popup.component';
 
 export interface DialogData {
   fk_wall: string;
@@ -334,5 +335,26 @@ export class ViewEventComponent implements OnInit {
     dialogRef.componentInstance.onEventSaved.subscribe(results => {
       this.selectedEvent = results;
     });
+  }
+
+  publishEvent() {
+    // this.selectedEvent.published = true;
+    console.log({e: this.selectedEvent})
+
+    if (this.validateEvent(this.selectedEvent)) {
+      this.efbs.updateEvent(this.key, this.selectedEvent);
+    } else {
+      this.dialog.open(EditEventPopupComponent, {
+        width: screen.width / 1.25 + "px",
+        data: {event: this.selectedEvent, eventKey: this.key}
+    });
+      
+    }
+
+    // 
+  }
+
+  validateEvent(event: Event): boolean {
+    return false
   }
 }

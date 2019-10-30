@@ -50,6 +50,7 @@ export class Event {
     timestamp: string;
     distance: string;
     creationDate: any;//string = setDateFromNow(0);
+    published: boolean = false;
 
     constructor(obj) {
         obj && Object.assign(this, obj);
