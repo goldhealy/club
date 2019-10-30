@@ -270,8 +270,6 @@ export class ViewEventComponent implements OnInit {
       
       this.isHost = this.authService.afAuth.auth.currentUser.uid == this.selectedEvent.host;
 
-      observerTwo.unsubscribe();
-      
       if (this.selectedEvent.host === this.authService.afAuth.auth.currentUser.uid) {
         
         this.hasOptions = false;
@@ -327,34 +325,26 @@ export class ViewEventComponent implements OnInit {
   }
 
   editEvent() {
-    const dialogRef = this.dialog.open(CreateNewEventComponent, {
+    this.dialog.open(CreateNewEventComponent, {
       width: screen.width / 1.25 + "px",
       data: {event: this.selectedEvent, stepIndex: 0, eventKey: this.key}
-    });
-
-    dialogRef.componentInstance.onEventSaved.subscribe(results => {
-      this.selectedEvent = results;
     });
   }
 
   publishEvent() {
-    // this.selectedEvent.published = true;
-    console.log({e: this.selectedEvent})
-
     if (this.validateEvent(this.selectedEvent)) {
+      this.selectedEvent.published = true;
       this.efbs.updateEvent(this.key, this.selectedEvent);
     } else {
       this.dialog.open(EditEventPopupComponent, {
         width: screen.width / 1.25 + "px",
         data: {event: this.selectedEvent, eventKey: this.key}
-    });
-      
-    }
+      });
 
-    // 
+    }
   }
 
   validateEvent(event: Event): boolean {
-    return false
+    return !!event.price
   }
 }
