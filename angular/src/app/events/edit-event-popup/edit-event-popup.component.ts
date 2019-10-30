@@ -27,5 +27,6 @@ export class EditEventPopupComponent implements OnInit {
       width: screen.width / 1.25 + "px",
       data: {event: this.data.event, stepIndex: 0, eventKey: this.data.eventKey}
     });
+    this.dialogRef.close();
   }
 }
