@@ -58,9 +58,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let element" >
-                <button (click)="onEditClick(element)" routerLink="/my-event" mat-button color="primary">Rediger</button>
+                <button (click)="onEditClick(element)" mat-button color="primary">Rediger</button>
+                <button (click)="publishEvent(element)" mat-button color="primary">Publish</button>
                 <button (click)="openDialog(element)" mat-button color="warn">Slet</button>
-            </td>
+              </td>
           </ng-container>
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

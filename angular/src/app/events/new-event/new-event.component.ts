@@ -66,9 +66,9 @@ export class NewEventComponent implements OnInit {
   // @ViewChild('title', {static: false}) nameInput: MatInput;
 
   ngOnInit() {
-  let dateNow = new Date();
-  this.eventDate.setDate(dateNow.getDate() + 7);
-  this.maxDate.setDate(dateNow.getDate() + 365);
+    let dateNow = new Date();
+    this.eventDate.setDate(dateNow.getDate() + 7);
+    this.maxDate.setDate(dateNow.getDate() + 365);
 
     this.newEventFormGroup = this._formBuilder.group({
       eventName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -122,8 +122,6 @@ export class NewEventComponent implements OnInit {
   formDataToModel(userSnapshot?): Event {
 
     const event = new Event({});
-
-    console.log(this.newEventFormGroup.value)
 
     event.name = this.newEventFormGroup.value.eventName;
     event.address = new EventAddress(this.newEventFormGroup.value.eventLocationStreet,

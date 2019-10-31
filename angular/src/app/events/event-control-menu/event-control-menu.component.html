@@ -3,21 +3,21 @@
 
   <button 
     (click)="displayAllEvents()" 
-    matTooltip="Kommende events" 
-    routerLink="/my-events" 
+    matTooltip="events" 
     [color]="allEventsShown ? 'primary' : ''"
     mat-raised-button>
-    Kommende Events
+    Events
   </button>
 
   <button 
     (click)="displayMyEventsOnly()" 
     matTooltip="Events som du arrangerer" 
-    routerLink="/my-events" 
     [color]="myEventsShown ? 'primary' : ''"
     mat-raised-button>
     Mine Events
   </button>
+  <!-- routerLink="/my-events"
+  routerLink="/attended-events"  -->
 
   <!-- <button
     (click)="displayJoinedEvents()"
@@ -29,10 +29,10 @@
 
   <button
     (click)="displayPastEvents()"
-    class="lesserBtn" matTooltip="En liste af de events, som du er tilmeldt" routerLink="/attended-events"
+    class="lesserBtn" matTooltip="En liste af de events, som du er tilmeldt" 
     [color]="pastEventsShown ? 'primary' : ''"
     mat-raised-button>
-    Tidligere Events
+    Mine Tidligere Events
   </button>
 
 </mat-card>

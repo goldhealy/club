@@ -122,9 +122,8 @@ export class EventListComponent implements OnInit {
 
           });
         }
-        this.currentEvents = this.events.filter( event => event.dateStart > Date.now());
+        this.currentEvents = this.events.filter( event => event.dateStart > Date.now() && event.published);
         this.updateEventList(this.currentEvents);
-
       });
 
 
@@ -172,8 +171,9 @@ export class EventListComponent implements OnInit {
     let myEvents;
     const userId = this.authService.afAuth.auth.currentUser.uid;
     if (showMyEvents) {
-      myEvents = this.currentEvents.filter((event: Event) => 
-        event.host == userId || event.participants[userId] !== undefined
+      myEvents = this.events.filter((event: Event) => 
+        event.dateStart > Date.now() &&
+        (event.host == userId || event.participants[userId] !== undefined)
       );
     } else {
       myEvents = this.currentEvents;
@@ -228,7 +228,7 @@ export class EventListComponent implements OnInit {
     setTimeout(() => {
       if (this.events.length < 1) {
         this.spinner.hide();
-        this.toast.info("Der er ingen events oprettet", "Info");
+        this.toast.info("Der er ingen events dtet", "Info");
       }
     }, 3000);
   }

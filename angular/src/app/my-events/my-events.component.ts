@@ -10,6 +10,7 @@ import { Event } from '../entity/event/event.model';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from '../auth.service';
 import { NavigationExtras, Router } from '@angular/router';
+import { CreateNewEventComponent } from '../create-new-event/create-new-event.component';
 
 export interface EventData {
   name: string;
@@ -69,9 +70,17 @@ export class MyEventsComponent implements OnInit {
       }, 3000)
   }
 
-  onEditClick(element) {
-    let e: Event = element;
-    this.efbs.myEventSelection = e;
+  onEditClick(event) {
+    // let e: Event = element;
+    // this.efbs.myEventSelection = e;
+    const dialogRef = this.dialog.open(CreateNewEventComponent, {
+      width: screen.width / 1.25 + "px",
+      data: {event: event, stepIndex: 0, eventKey: event.key}
+    });
+  }
+
+  publishEvent(event) {
+    
   }
 
   onDeleteClick(element) {

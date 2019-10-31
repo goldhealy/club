@@ -1,5 +1,6 @@
 button {
     margin: 10px;
+    text-transform: uppercase;
 }
 
 mat-card {
@@ -15,8 +16,4 @@ mat-card {
         width: 100%;
         margin: 0;
     }
-}
-
-.lesserBtn {
-    font-size: 12px !important;
 }

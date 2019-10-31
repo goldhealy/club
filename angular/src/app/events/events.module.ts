@@ -19,12 +19,20 @@ import { MatFormFieldModule,
          MatCheckboxModule, 
          MatTooltipModule,
          MatDatepickerModule,
-         MatSortModule
+         MatSortModule,
+         MatIconModule,
+         MatChipsModule,
+         MatListModule,
+         MatTabsModule,
+         MatDialogModule
         } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { LibModule } from '../lib/lib.module';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { ViewEventComponent } from './view-event/view-event.component';
+import { RouterModule } from '@angular/router';
+import { EditEventPopupComponent } from './edit-event-popup/edit-event-popup.component';
 
 
 @NgModule({
@@ -34,6 +42,8 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     EventListComponent,
     EventFilterComponent,
     EventControlMenuComponent,
+    ViewEventComponent,
+    EditEventPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -55,14 +65,21 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     MatCheckboxModule,
     MatDatepickerModule,
     MatTooltipModule,
+    MatIconModule,
+    MatChipsModule,
+    MatListModule,
+    MatTabsModule,
+    MatDialogModule,
     AngularFontAwesomeModule,
     TranslateModule,
+    RouterModule
   ],
   exports: [
     EventsComponent,
   ],
   entryComponents: [
     NewEventComponent,
+    EditEventPopupComponent,
   ]
 })
 export class EventsModule { }

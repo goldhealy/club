@@ -19,7 +19,7 @@ import { PricesComponent } from './prices/prices.component';
 import { PaymentComponent } from './payment/payment.component';
 import { MyEventComponent } from './my-event/my-event.component';
 import { PatchNotesComponent } from './patch-notes/patch-notes.component';
-import { ViewEventComponent } from './view-event/view-event.component';
+import { ViewEventComponent } from './events/view-event/view-event.component';
 import { RateEventComponent } from './rate-event/rate-event.component';
 
 import { AdminModule } from './admin/admin.module';
