@@ -37,3 +37,14 @@ form {
 ::ng-deep .mat-radio-label {
   margin: 0;
 }
+
+@media only screen and (orientation: portrait) {
+  ::ng-deep .mat-dialog-container {
+    padding: 0;
+    border-radius: 0;
+  }
+
+  ::ng-deep .mat-card {
+    padding: 0;
+  }
+}

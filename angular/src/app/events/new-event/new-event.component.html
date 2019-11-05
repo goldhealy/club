@@ -1,7 +1,9 @@
-<div class="step-guide">
+<div class="step-guide" [ngClass]="{'collapsed': histCollapsed}">
+  <div *ngIf="isMobile && !histCollapsed" class="toggle-button fa fa-close" (click)="histCollapsed = true"></div>
+  <div *ngIf="isMobile && histCollapsed" class="toggle-button fa fa-info-circle" (click)="histCollapsed = false"></div>
   <div class="presenter">
     <h2>{{'COMPONENTS.NEW_EVENT.WHAT_AND_WHERE_STEP.TITLE' | translate}}</h2>
-    <div class="open-event-tip" [innerHTML]="'COMPONENTS.NEW_EVENT.WHAT_AND_WHERE_STEP.DESCRIPTION' | translate">
+    <div *ngIf="!histCollapsed" class="open-event-tip" [innerHTML]="'COMPONENTS.NEW_EVENT.WHAT_AND_WHERE_STEP.DESCRIPTION' | translate">
     </div>
   </div>
 </div>
@@ -125,6 +127,8 @@
 
 
   <div class="buttons">
+    <button mat-raised-button [mat-dialog-close]=""
+      matStepperNext>Fortryd</button>
     <button mat-raised-button color="primary" [disabled]="!newEventFormGroup.valid" (click)="fillDetails()"
       matStepperNext>Udfyld detaljerne</button>
     <button mat-raised-button color="warn" [disabled]="!newEventFormGroup.valid" (click)="onSubmitEvent()"

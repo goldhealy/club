@@ -12,6 +12,7 @@ import { GeoCoord } from 'ng2-haversine';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { EventAddress } from 'src/app/entity/user/user';
+import { MobileDetectorService } from 'src/app/mobile-detector.service';
 
 export const errorMessages: { [key: string]: string } = {
   eventName: 'Titel må ikke være mere end 50 tegn',
@@ -26,6 +27,8 @@ export const errorMessages: { [key: string]: string } = {
 export class NewEventComponent implements OnInit {
 
   onEventCreated: EventEmitter<string> = new EventEmitter<string>();
+  isMobile: boolean = false;
+  histCollapsed: boolean = false;
 
   newEventFormGroup: FormGroup;
   apiZipValue;
@@ -53,6 +56,7 @@ export class NewEventComponent implements OnInit {
     public dialog: MatDialog,
     private translateService: TranslateService,
     private router: Router,
+    private mbs: MobileDetectorService,
   ) {
     this.user$ = this.userService.getUserByID(this.authService.afAuth.auth.currentUser.uid);
     this.user$.subscribe(userSnapshot => {
@@ -70,6 +74,7 @@ export class NewEventComponent implements OnInit {
   // @ViewChild('title', {static: false}) nameInput: MatInput;
 
   ngOnInit() {
+    this.isMobile = this.mbs.isPortrait();
     let dateNow = new Date();
     this.eventDate.setDate(dateNow.getDate() + 7);
     this.maxDate.setDate(dateNow.getDate() + 365);
@@ -203,6 +208,10 @@ export class NewEventComponent implements OnInit {
       });
       this.apiZipValue = this.userInsertedAddress.city;
     }
+  }
+
+  close() {
+
   }
 
 }
