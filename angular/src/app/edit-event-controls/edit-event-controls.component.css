@@ -16,10 +16,22 @@
   margin-left: auto;
 }
 
-.controls button.canc{ 
-  margin-right: 10px;
+.controls.mobile button.prev, .controls button.next{ 
+  margin-bottom: 10px;
 }
 
-.controls button.save{ 
-  margin-left: 10px;
+.align-right {
+  text-align: right;
+}
+
+@media only screen and (orientation: landscape) {
+
+  .controls button.canc{ 
+    margin-right: 10px;
+  }
+
+  .controls button.save{ 
+    margin-left: 10px;
+  }
+
 }

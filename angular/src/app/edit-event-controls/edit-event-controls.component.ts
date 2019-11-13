@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { MobileDetectorService } from '../mobile-detector.service';
 
 
 @Component({
@@ -16,10 +17,14 @@ export class EditEventControlsComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Output() submit = new EventEmitter();
 
-  constructor() {}
+  isMobile = false;
+
+  constructor(
+    private md: MobileDetectorService, 
+  ) {}
   
   ngOnInit() {
-
+    this.isMobile = this.md.check();
   }
 
   onCancel() {

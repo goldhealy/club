@@ -43,6 +43,8 @@ export class EventsComponent implements OnInit {
   }
 
   showPastEvents(isPastShown: boolean) {
+    console.log('lalunia')
+
     this.eventsList.showPastEvents(isPastShown);
   }
 

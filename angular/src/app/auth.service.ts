@@ -94,6 +94,9 @@ export class AuthService {
 
   doGoogleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'consent'
+    });
     this.afAuth.auth.useDeviceLanguage();
     return this.afAuth.auth.signInWithPopup(provider).then( result => {
       this.ufbs.getUserByID(result.user.uid).pipe(first()).subscribe(user => {

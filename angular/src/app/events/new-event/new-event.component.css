@@ -4,7 +4,6 @@
 }
 
 .step-guide {
-  width: 400px;
   flex: 0 0 400px;
   margin-right: 20px;
 }
@@ -12,6 +11,8 @@
 ::ng-deep .new-event-panel .mat-dialog-container {
   padding: 10px;
   border-radius: 6px;
+  margin: auto;
+  width: 80%;
 }
 
 ::ng-deep .new-event-panel .mat-dialog-container .mat-grid-tile {
@@ -139,8 +140,9 @@ mal-label {
     width: 100%;
   }
 
-  ::ng-deep .mat-dialog-container {
+  ::ng-deep .new-event-panel .mat-dialog-container {
     border-radius: 0!important;
+    width: 100%;
   }
 
   :host {

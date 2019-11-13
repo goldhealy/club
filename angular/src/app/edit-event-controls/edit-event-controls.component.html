@@ -1,6 +1,17 @@
-<div class="controls">
+<div class="controls" *ngIf="!isMobile">
   <button class="prev" mat-raised-button matStepperPrevious [disabled]="!isValid || isFirst">Tilbage</button>
   <button class="canc" (click)="onCancel()" mat-raised-button color="warn">Fortryd</button>
   <button class="save" (click)="onSubmit()" mat-raised-button color="primary" [disabled]="!isValid">Gem kladde</button>
   <button class="next" mat-raised-button matStepperNext [disabled]="!isValid || isLast">Næste</button>
 </div>
+
+<div class="controls mobile" *ngIf="isMobile">
+  <div class="">
+    <button class="prev" mat-raised-button matStepperPrevious [disabled]="!isValid || isFirst">Tilbage</button>
+    <button class="canc" (click)="onCancel()" mat-raised-button color="warn">Fortryd</button>
+  </div>
+  <div class="align-right">
+    <button class="next" mat-raised-button matStepperNext [disabled]="!isValid || isLast">Næste</button>
+      <button class="save" (click)="onSubmit()" mat-raised-button color="primary" [disabled]="!isValid">Gem kladde</button>
+  </div>
+  </div>
