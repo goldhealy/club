@@ -37,7 +37,6 @@ export class EventControlMenuComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NewEventComponent, {
-      width: this.dialogWidth,
       panelClass: "new-event-panel"
     });
 

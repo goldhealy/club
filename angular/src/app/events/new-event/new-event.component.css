@@ -4,7 +4,6 @@
 }
 
 .step-guide {
-  width: 400px;
   flex: 0 0 400px;
   margin-right: 20px;
 }
@@ -12,6 +11,8 @@
 ::ng-deep .new-event-panel .mat-dialog-container {
   padding: 10px;
   border-radius: 6px;
+  margin: auto;
+  width: 80%;
 }
 
 ::ng-deep .new-event-panel .mat-dialog-container .mat-grid-tile {
@@ -86,6 +87,10 @@ form {
   height: 14px;
 }
 
+::ng-deep .cdk-overlay-pane {
+  max-width: 100vw !important;
+}
+
 .header fa {
   margin-right: 5px;
 }
@@ -127,4 +132,68 @@ mat-form-field {
 
 mal-label {
   color: rgba(0,0,0,.54);
+}
+
+@media only screen and (orientation: portrait) {
+  ::ng-deep .cdk-overlay-pane {
+    height: 100%;
+    width: 100%;
+  }
+
+  ::ng-deep .new-event-panel .mat-dialog-container {
+    border-radius: 0!important;
+    width: 100%;
+  }
+
+  :host {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .header {
+    font-size: 4vw;
+  }
+  @media screen and (min-width: 450px) {
+    .header {
+       font-size: 18px;
+    }
+  }
+
+  .step-guide {
+    padding: 10px;
+    width: 100%;
+    position: relative;
+    font-size: 4vw;
+  }
+
+  .toggle-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+
+  .collapsed .toggle-button {
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 5vw;
+  }
+
+  .presenter {
+    font-size: 3vw;
+    transition: all 0.3s;
+  }
+
+  .collapsed .presenter {
+    padding-left: 0;
+  }
+
+  h2 {
+    padding: 10px 0 0 0;
+    font-size: 7vw;
+  }
+
+  .collapsed h2 {
+    padding: 0;
+  }
 }
