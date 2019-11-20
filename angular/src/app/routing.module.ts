@@ -30,7 +30,7 @@ import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
 const routes: Routes = [
-  { path: 'landing-page', redirectTo: '', pathMatch: 'full'},
+  { path: 'landing-page', component: LandingPageComponent},
   { path: 'sign-up', component: SignUpPageComponent},
   { path: 'verify-email', component: VerifyEmailComponent},
   { path: 'loggedin-dashboard', component: LoggedinDashboardComponent, canActivate: [AuthGuard] },
@@ -59,7 +59,7 @@ const routes: Routes = [
   },
   { 
     path: '',
-    component: LandingPageComponent
+    component: EventsComponent, canActivate: [AuthGuard]
   },
   { path: '**', component: PageNotFoundComponent }
 ];
