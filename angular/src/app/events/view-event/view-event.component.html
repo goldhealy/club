@@ -5,6 +5,7 @@
         <mat-card *ngIf="selectedEvent.name !== undefined">
           <button *ngIf="isHost" (click)="editEvent()" mat-raised-button color="primary">Rediger</button>
           <button *ngIf="isHost && !selectedEvent.published" (click)="publishEvent()" mat-raised-button color="primary">Opret event</button>
+          <span *ngIf="isHost && selectedEvent.published" (click)="publishEvent()" class="published-text">pubished</span>
           <mat-card-title>{{selectedEvent.name}}
             <mat-chip-list>
               <mat-chip color="primary" selected>
@@ -149,7 +150,8 @@
     <div class="header">
         <span class="date">{{selectedEvent.dateStart | date:'EEEE, MMMM d, y' }}</span>
         <button *ngIf="isHost" (click)="editEvent()" mat-raised-button color="primary" class=" fa fa-pencil"></button>
-        <button *ngIf="isHost" (click)="publishEvent()" mat-raised-button color="primary" class=" fa fa-paper-plane"></button>
+        <button *ngIf="isHost && !selectedEvent.published" (click)="publishEvent()" mat-raised-button color="primary" class=" fa fa-paper-plane"></button>
+        <span *ngIf="isHost && selectedEvent.published" (click)="publishEvent()" class="published-text">pubished</span>
     </div>
     <div class="title">{{selectedEvent.name}}</div>
     <mat-card-subtitle>

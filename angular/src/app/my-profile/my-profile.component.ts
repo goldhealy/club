@@ -51,7 +51,6 @@ export class MyProfileComponent implements OnInit {
 
   // Activation
   usernameValidation = false;
-  userIsDeactivatingAccount = false;
   isActivated = false;
 
   //Family
@@ -365,14 +364,14 @@ export class MyProfileComponent implements OnInit {
   }
 
   activateAccount() {
-    this.userIsDeactivatingAccount = false;
+    this.isActivated = true;
     true || this.accountProgress(this.user) >= 100 ?
       this.ufbs.updateUser({ isActivated: true }, this.authService.afAuth.auth.currentUser.uid) :
       this.ufbs.updateUser({ isActivated: false }, this.authService.afAuth.auth.currentUser.uid);
   }
 
   deactivateAccount() {
-    this.userIsDeactivatingAccount = true;
+    this.isActivated = false;
     this.ufbs.updateUser({ isActivated: false }, this.authService.afAuth.auth.currentUser.uid);
   }
 

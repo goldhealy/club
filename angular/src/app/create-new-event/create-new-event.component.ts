@@ -138,12 +138,12 @@ export class CreateNewEventComponent implements OnInit {
       eventDeadlineTime: [event.deadlineTime || '00:00', Validators.required]
     });
     this.fourthFormGroup = this._formBuilder.group({
-      eventPrice: [event.price || '', Validators.required],
-      eventPaymentOption: [event.paymentOption || ''],
+      eventPrice: [event.price || '', [Validators.required, Validators.max(100000)]],
+      eventPaymentOption: [event.paymentOption || '', Validators.required],
       eventPaymentDue: [event.paymentDue || ''],
       eventPaymentDate: [new Date(event.paymentDate) || ''],
       eventMobilePayNumber: [event.mobilePayNumber || ''],
-      eventAccountNumber: [event.accountNumber || '', Validators.required]
+      eventAccountNumber: [event.accountNumber || '']
     });
     this.fifthFormGroup = this._formBuilder.group({
       eventFile: ['', Validators.required],
