@@ -101,7 +101,11 @@ export class CreateNewEventComponent implements OnInit {
     });
 
     this.eventDate.setDate(this.dateNow.getDate() + 7);
-    this.maxRegistrationDate.setDate(this.dateNow.getDate() + 4);
+    this.maxRegistrationDate.setDate(this.eventDate.getDate());
+  }
+
+  changeEventDate(event) {
+    this.maxRegistrationDate.setDate(event.target.value.getDate());
   }
 
   ngOnInit() {
@@ -139,7 +143,7 @@ export class CreateNewEventComponent implements OnInit {
       eventPaymentDue: [event.paymentDue || ''],
       eventPaymentDate: [new Date(event.paymentDate) || ''],
       eventMobilePayNumber: [event.mobilePayNumber || ''],
-      eventAccountNumber: [event.accountNumber || '']
+      eventAccountNumber: [event.accountNumber || '', Validators.required]
     });
     this.fifthFormGroup = this._formBuilder.group({
       eventFile: ['', Validators.required],

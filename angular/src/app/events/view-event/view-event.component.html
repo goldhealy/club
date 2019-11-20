@@ -146,33 +146,51 @@
 
 <div *ngIf="isMobile">
   <mat-card class="mobileContainer" *ngIf="selectedEvent.name !== undefined">
-      <button *ngIf="isHost" (click)="editEvent()" mat-raised-button color="primary">Rediger</button>
-      <button *ngIf="isHost && !selectedEvent.published" (click)="publishEvent()" mat-raised-button color="primary">Opret event</button>
-    <mat-card-title>{{selectedEvent.name}}</mat-card-title>
+    <div class="header">
+        <span class="date">{{selectedEvent.dateStart | date:'EEEE, MMMM d, y' }}</span>
+        <button *ngIf="isHost" (click)="editEvent()" mat-raised-button color="primary" class=" fa fa-pencil"></button>
+        <button *ngIf="isHost" (click)="publishEvent()" mat-raised-button color="primary" class=" fa fa-paper-plane"></button>
+    </div>
+    <div class="title">{{selectedEvent.name}}</div>
     <mat-card-subtitle>
-      <fa name="tag"></fa>
-      {{'COMPONENTS.NEW_EVENT.WHAT_AND_WHERE_STEP.CATEGORIES.' + selectedEvent.category | uppercase | translate}}
-      <br><br>
-      {{selectedEvent.description}}
+
+      <div class="subtitle" *ngIf="host">
+        <div class="host-image">
+            <div class="user-picture" [ngStyle]="{'background-image': 'url('+host.pictureUrl+')'}"></div>
+        </div>
+        <div class="details">
+          <b>host:</b> {{host.firstName}} {{host.lastName}}<br>
+          <b>kategori:</b> {{'COMPONENTS.NEW_EVENT.WHAT_AND_WHERE_STEP.CATEGORIES.' + selectedEvent.category | uppercase | translate}}
+          <br>
+          <i> {{selectedEvent.description}}</i>
+        </div>
+      </div>
+
+
+
     </mat-card-subtitle>
+    <mat-card-actions *ngIf="!isHost">
+      <button *ngIf="!isParticipating" (click)="onAttend()" mat-raised-button color="primary">Tilmeld</button>
+      <button *ngIf="isParticipating" (click)="onUnattend()" mat-raised-button color="warn">Frameld</button>
+      <button *ngIf="wasParticipating" mat-button (click)="onRateClick()" [routerLink]="['/rate-event']">Bedøm dette event</button>
+    </mat-card-actions>
     <mat-card-content>
 
-      <p><strong>Adresse:</strong><br> {{selectedEvent.address.street}} , {{selectedEvent.address.city}} ,
+      <p><strong>Adresse:</strong> {{selectedEvent.address.street}} , {{selectedEvent.address.city}} ,
         {{selectedEvent.address.zip}}</p>
-      <p><strong>Dato</strong><br> Under udvikling</p>
-      <p><strong>Kønsfordeling</strong><br> {{selectedEvent.genderRatio}}</p>
-      <p><strong>Børn</strong><br> {{selectedEvent.targetGroup}}</p>
-      <p><strong>Fra</strong><br> {{selectedEvent.minAge}} til {{selectedEvent.maxAge}}</p>
-      <p><strong>Pladser</strong><br> {{selectedEvent.maxGuests}}</p>
-      <p><strong>Pris</strong><br> {{selectedEvent.price}} DKK</p>
-      <p><strong>Hvordan betales der: </strong><br> {{selectedEvent.paymentOption}}</p>
-      <p><strong>Hvornår betales der:</strong><br> {{selectedEvent.paymentDue}}</p>
+      
+      <p><strong>Kønsfordeling:</strong> {{'COMPONENTS.NEW_EVENT.AUDIENCE_STEP.GENDER_OPTIONS.' + selectedEvent.genderRatio | uppercase | translate}}
+      </p>
+      <p><strong>Børn:</strong>
+        {{'COMPONENTS.NEW_EVENT.AUDIENCE_STEP.CHILDREN_OPTIONS.' + selectedEvent.targetGroup | uppercase | translate}}
+      </p>
+      <p><strong>Alder fra og til:</strong> {{selectedEvent.minAge}} til {{selectedEvent.maxAge}}</p>
+      <p><strong>Minimum/maksimum deltagerantal:</strong> {{selectedEvent.minGuests}} til
+        {{selectedEvent.maxGuests}}</p>
+      <p><strong>Pris:</strong> {{selectedEvent.price}} DKK</p>
+      <p><strong>Hvordan betales der: </strong> {{selectedEvent.paymentOption}}</p>
+      <p><strong>Hvornår betales der:</strong> {{selectedEvent.paymentDue}}</p>
     </mat-card-content>
-    <mat-card-actions>
-      <button *ngIf="!isParticipating" (click)="onAttend()" mat-button color="primary">Tilmeld</button>
-      <button *ngIf="isParticipating" (click)="onUnattend()" mat-button color="warn">Frameld</button>
-      <button mat-button (click)="onRateClick()" [routerLink]="['/rate-event']">Bedøm dette event</button>
-    </mat-card-actions>
   </mat-card>
 
   <mat-card class="mobileContainer">

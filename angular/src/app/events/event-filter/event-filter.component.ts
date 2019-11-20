@@ -65,7 +65,6 @@ export class EventFilterComponent implements OnInit {
   }
 
   onChildrenChange(value) {
-    console.log('pizia')
     if (value != undefined) {
       this.tbs.onChildrenChange(value);
     }

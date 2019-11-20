@@ -237,6 +237,7 @@ export class EventListComponent implements OnInit {
   applyFilter(filterValue) {
     
     this.dataSource.filter = JSON.stringify(filterValue);
+    this.dataSourceMobile.filter = JSON.stringify(filterValue);
 
     // let obj = {category: strArr[1], genderRatio: strArr[2], targetGroup: strArr[3]};
     
