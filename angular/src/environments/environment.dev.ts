@@ -1,13 +1,13 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyDLgUoXPkwOuCX6aWhjUr7PXpZwox56f10",
-    authDomain: "holopedia-f204a.firebaseapp.com",
-    databaseURL: "https://holopedia-f204a.firebaseio.com",
-    projectId: "holopedia-f204a",
-    storageBucket: "holopedia-f204a.appspot.com",
-    messagingSenderId: "345316777316",
-    appId: "1:345316777316:web:235fec57ece333260fee71",
-    measurementId: "G-JS8JHERYGN"
+    apiKey: "AIzaSyB4P9fRwQz6pjg5S2OeQW6EMZKA0ecY_ro",
+    authDomain: "goldhealydatabase.firebaseapp.com",
+    databaseURL: "https://goldhealydatabase.firebaseio.com",
+    projectId: "goldhealydatabase",
+    storageBucket: "goldhealydatabase.appspot.com",
+    messagingSenderId: "1040054985798",
+    appId: "1:1040054985798:web:274f862a39af8d6cdf5647",
+    measurementId: "G-9KN5P62SYR"
   }
 };
