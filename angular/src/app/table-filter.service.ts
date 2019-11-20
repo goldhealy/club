@@ -24,7 +24,6 @@ export class TableFilterService {
   }
 
   onChildrenChange(children: string) {
-    console.log('pizia')
     
     this.children = children;
 

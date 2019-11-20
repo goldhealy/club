@@ -64,9 +64,6 @@ form {
     border-radius: 0;
   }
 
-  ::ng-deep .mat-card {
-    padding: 0;
-  }
 
   ::ng-deep .mat-step-label {
     display: none!important;
