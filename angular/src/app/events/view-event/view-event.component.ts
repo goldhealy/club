@@ -34,7 +34,9 @@ export class ViewEventComponent implements OnInit {
   isMobile = false;
   hasOptions = true;
   isParticipating = false;
+  wasParticipating = false;
   isHost = false;
+  host: User;
   eventRating = 0;
   eventRatingRemainderPercent = 0;
   hasRatedEvent = false;
@@ -48,6 +50,7 @@ export class ViewEventComponent implements OnInit {
   pKey = "";
   participantsDisplayNames = [];
   participantsData = []
+  ratings;
   
   // inQueue
   queueDisplayNames = [];
@@ -170,6 +173,7 @@ export class ViewEventComponent implements OnInit {
 
   showEventRating() {
     let observerTwo = this.ratingService.getRatings().subscribe(ratings => {
+      this.ratings = ratings;
       let eventScore = 0;
         ratings.forEach(rating => {
 
@@ -188,6 +192,11 @@ export class ViewEventComponent implements OnInit {
       
       this.eventRating = (this.scoreCount) ? eventScore / this.scoreCount : 0;
       this.eventRatingRemainderPercent = (this.eventRating % 1) * 100;
+
+      let hasAlreadyRated = this.ratings.find(rating => rating.key == this.username + this.selectedEvent.key);
+      const userId = this.authService.afAuth.auth.currentUser.uid;
+      this.wasParticipating = this.selectedEvent.dateStart <= Date.now() && this.selectedEvent.participants[userId] !== undefined && !hasAlreadyRated && !this.isHost;
+
       observerTwo.unsubscribe();
     });
   }
@@ -243,6 +252,7 @@ export class ViewEventComponent implements OnInit {
   getHostNameFromUID(uid: string) {
     return new Promise( (resolve, reject) => {
       let observer = this.ufbs.getUserByID(uid).subscribe( (snapshot:any) => {
+        this.host = snapshot;
         resolve(snapshot.username);
         observer.unsubscribe();
       });
@@ -270,8 +280,6 @@ export class ViewEventComponent implements OnInit {
       
       this.isHost = this.authService.afAuth.auth.currentUser.uid == this.selectedEvent.host;
 
-      observerTwo.unsubscribe();
-      
       if (this.selectedEvent.host === this.authService.afAuth.auth.currentUser.uid) {
         
         this.hasOptions = false;
@@ -327,34 +335,26 @@ export class ViewEventComponent implements OnInit {
   }
 
   editEvent() {
-    const dialogRef = this.dialog.open(CreateNewEventComponent, {
-      width: screen.width / 1.25 + "px",
+    this.dialog.open(CreateNewEventComponent, {
+      width: screen.width / 1 + "px",
       data: {event: this.selectedEvent, stepIndex: 0, eventKey: this.key}
-    });
-
-    dialogRef.componentInstance.onEventSaved.subscribe(results => {
-      this.selectedEvent = results;
     });
   }
 
   publishEvent() {
-    // this.selectedEvent.published = true;
-    console.log({e: this.selectedEvent})
-
     if (this.validateEvent(this.selectedEvent)) {
+      this.selectedEvent.published = true;
       this.efbs.updateEvent(this.key, this.selectedEvent);
     } else {
       this.dialog.open(EditEventPopupComponent, {
         width: screen.width / 1.25 + "px",
         data: {event: this.selectedEvent, eventKey: this.key}
-    });
-      
-    }
+      });
 
-    // 
+    }
   }
 
   validateEvent(event: Event): boolean {
-    return false
+    return !!event.price
   }
 }

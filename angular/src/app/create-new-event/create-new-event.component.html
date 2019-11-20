@@ -131,7 +131,8 @@
           <label class="label">Dato for eventet</label>
           <mat-form-field class="field">
             <input [min]="minDate" [max]="maxDate" matTooltip="Klik på kalendar-ikonet for at vælge dato" matInput
-              [matDatepicker]="picker" formControlName="eventDate" placeholder="DD/MM/YYYY">
+              [matDatepicker]="picker" formControlName="eventDate" placeholder="DD/MM/YYYY"
+              (dateChange)="changeEventDate($event)">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -226,7 +227,7 @@
           <mat-form-field
             *ngIf="fourthFormGroup.value.eventPaymentOption == 'Bankoverførelse'">
             <input (change)="accountNumberValidation($event.target.value)" matInput formControlName="eventAccountNumber"
-              pattern="[0-9]" placeholder="Kontonummer">
+              pattern="[0-9]{14}$" placeholder="Reg. nr. Kontonummer">
           </mat-form-field>
 
           <label *ngIf="fourthFormGroup.value.eventPaymentDue == 'Dato'">Dato for betaling</label> <br>

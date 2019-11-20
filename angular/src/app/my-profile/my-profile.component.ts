@@ -51,7 +51,6 @@ export class MyProfileComponent implements OnInit {
 
   // Activation
   usernameValidation = false;
-  userIsDeactivatingAccount = false;
   isActivated = false;
 
   //Family
@@ -160,21 +159,17 @@ export class MyProfileComponent implements OnInit {
           this.personDataForm.get('username').setValue(this.user.username);
         }
         
-        let childCount = 0;
         if (this.user.children.childOne) {
           this.personDataForm.get('birthdayChild1').setValue(this.user.children.childOne);
-          childCount++;
         }
         if (this.user.children.childTwo) {
           this.personDataForm.get('birthdayChild2').setValue(this.user.children.childTwo);
-          childCount++;
         }
         if (this.user.children.childThree) {
           this.personDataForm.get('birthdayChild3').setValue(this.user.children.childThree);
-          childCount++;
         }
         
-        this.displayBirthdayInput(childCount);
+        this.displayBirthdayInput(this.user.numberOfChildren);
         
         if (this.user.notifications) {
           this.personDataForm.get('notifications').setValue(this.user.notifications);
@@ -369,14 +364,14 @@ export class MyProfileComponent implements OnInit {
   }
 
   activateAccount() {
-    this.userIsDeactivatingAccount = false;
+    this.isActivated = true;
     true || this.accountProgress(this.user) >= 100 ?
       this.ufbs.updateUser({ isActivated: true }, this.authService.afAuth.auth.currentUser.uid) :
       this.ufbs.updateUser({ isActivated: false }, this.authService.afAuth.auth.currentUser.uid);
   }
 
   deactivateAccount() {
-    this.userIsDeactivatingAccount = true;
+    this.isActivated = false;
     this.ufbs.updateUser({ isActivated: false }, this.authService.afAuth.auth.currentUser.uid);
   }
 

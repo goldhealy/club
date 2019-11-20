@@ -11,4 +11,8 @@ export class MobileDetectorService {
     return window.screen.width <= w;
   }
 
+  isPortrait() {
+    return window.innerHeight > window.innerWidth;
+  }
+
 }

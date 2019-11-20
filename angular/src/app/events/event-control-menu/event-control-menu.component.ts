@@ -18,7 +18,7 @@ export class EventControlMenuComponent implements OnInit {
   @Output() showPastEvents = new EventEmitter();
   @Output() showJoinedEvents = new EventEmitter();
 
-  dialogWidth = screen.width / 1.25 + "px";
+  dialogWidth = screen.width / 0.9 + "px";
   dialogHeight = screen.height / 1.75 + "px";
   allEventsShown: boolean = true;
   myEventsShown: boolean = false;
@@ -32,11 +32,11 @@ export class EventControlMenuComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    console.log({wid: screen.width})
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NewEventComponent, {
-      width: this.dialogWidth,
       panelClass: "new-event-panel"
     });
 

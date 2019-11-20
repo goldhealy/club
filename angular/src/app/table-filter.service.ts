@@ -24,6 +24,7 @@ export class TableFilterService {
   }
 
   onChildrenChange(children: string) {
+    
     this.children = children;
 
 

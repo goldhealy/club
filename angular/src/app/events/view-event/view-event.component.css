@@ -129,3 +129,37 @@ mat-card {
 mat-chip {
     transform: scale(0.8);
 }
+
+.header .date {
+  font-size: 14px;
+}
+
+.header button {
+  padding: 0;
+  min-width: 40px;
+  font-size: 16px;
+  margin: 0 0 0 10px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  display: flex;
+}
+
+.user-picture {
+  display: inline-block;
+  background-size: 100%;
+  width: 60px;
+  height: 60px;
+  margin: 0 10px 0 0;
+  border-radius: 50%;
+}
+.published-text {
+  margin-left: 10px;
+  color: #3f51b5;
+}

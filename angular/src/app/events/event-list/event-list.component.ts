@@ -183,6 +183,7 @@ export class EventListComponent implements OnInit {
   }
 
   showPastEvents(isPastShown: boolean) {
+    console.log('lilili')
     let myEvents;
     const userId = this.authService.afAuth.auth.currentUser.uid;
     if (isPastShown) {
@@ -236,6 +237,7 @@ export class EventListComponent implements OnInit {
   applyFilter(filterValue) {
     
     this.dataSource.filter = JSON.stringify(filterValue);
+    this.dataSourceMobile.filter = JSON.stringify(filterValue);
 
     // let obj = {category: strArr[1], genderRatio: strArr[2], targetGroup: strArr[3]};
     

@@ -74,7 +74,7 @@ export class MyEventsComponent implements OnInit {
     // let e: Event = element;
     // this.efbs.myEventSelection = e;
     const dialogRef = this.dialog.open(CreateNewEventComponent, {
-      width: screen.width / 1.25 + "px",
+      width: screen.width / 1 + "px",
       data: {event: event, stepIndex: 0, eventKey: event.key}
     });
   }
