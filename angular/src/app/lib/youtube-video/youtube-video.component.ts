@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
   selector: 'app-youtube-video',
@@ -8,6 +8,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class YoutubeVideoComponent implements OnInit {
 
+  @Input() videoId: string;
+
   player;
 
   constructor() { }
@@ -15,7 +17,7 @@ export class YoutubeVideoComponent implements OnInit {
   ngOnInit() {
     (<any>window).onYouTubeIframeAPIReady= () => {
       this.player = new (<any>window).YT.Player('player', {
-        videoId: 'AtAN0hqI0-U',
+        videoId: this.videoId,
         events: {
           'onReady': this.onPlayerReady,
           'onStateChange': this.onPlayerStateChange
